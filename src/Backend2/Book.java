@@ -1,8 +1,7 @@
-package Backend2;
 
 public class Book {
 	
-	private Long isbn; // book's isbn number 
+	private Long isbn;
 	private String title; // book's title 
 	private String author; // book's author 
 	private int rating; // rating out of 5 
@@ -21,6 +20,10 @@ public class Book {
 		this.rating = rating;
 	}
 	
+	public Long getIsbn() {
+		return isbn; 
+	}
+	
 	public String getTitle() {
 		return title; 
 	}
@@ -33,12 +36,21 @@ public class Book {
 		return rating;
 	}
 	
-	public void setRating(int rating) {
+	public void setRating(Integer rating) {
 		this.rating = rating; 
 	}
-
-	public Long getIsbn() {
-		return isbn;
+	
+	public void setAuthor(String author) {
+		this.author = author; 
 	}
 	
+	public void setTitle(String title) {
+		this.title = title; 
+	}
+	
+	@Override
+	public String toString() {
+	    return "ISBN: " +  isbn + "Title: " + title + "\nAuthor: " + author + "\nRating: " + rating + "\n";
+	}
+
 }
