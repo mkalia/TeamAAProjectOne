@@ -24,5 +24,4 @@ hs_err_pid*
 
 # personal files (add from your own homework implementation into Common folder)
 HashTableMap.java
-MapADT.java
 KeyAndValue.java
