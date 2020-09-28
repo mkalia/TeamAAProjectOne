@@ -1,15 +1,42 @@
 package Test2;
 
-import Backend2.Book;
-import Backend2.State;
+import java.util.ArrayList;
 
-import Data1.DataUtils;
+import Backend2.Book;
+//import Backend2.State;
+
+//import Data1.DataUtils;
 
 import Common.HashTableMap;
 import Common.MapADT;
 
+class State {
+
+    private MapADT<Long, Book> map = DataUtils.loadData();
+    private ArrayList<Long> keys = new ArrayList<>();
+
+    public boolean add(Book book) {
+        return false;
+    }
+
+    public Book remove(long l) {
+        return null;
+    }
+
+}
+
+class DataUtils {
+    public static MapADT<Long, Book> loadData() {
+        MapADT<Long, Book> map = new HashTableMap<>();
+        return map;
+    }
+
+    public static void saveData(MapADT<Long, Book> map, ArrayList<Long> keys) {
+    }
+}
+
 /**
- * 
+ * All of these tests return true if they are successful
  */
 public class TestVirtualBookTracker {
     // Successful import of txt data into app (printed list matches expected data)
@@ -53,7 +80,7 @@ public class TestVirtualBookTracker {
         State state = new State();
         Book book = new Book(123_4_56_789101_1L, "Rooster", "Lighthouse", 3);
         state.add(book);
-        //TODO: Replace with actual isbn
+        // TODO: Replace with actual isbn
         state.remove(98765L);
         String expected = "";
         return state.toString().equals(expected);
@@ -62,11 +89,20 @@ public class TestVirtualBookTracker {
     // Change details of books and check if the printed list matches those changes
     public static boolean changeAndCheck() {
         State state = new State();
-        //TODO: Replace with actual isbn
+        // TODO: Replace with actual isbn
         Book book = state.remove(98765L);
         book.setRating(1);
         state.add(book);
         String expected = "";
         return state.toString().equals(expected);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(importSuccessful());
+        System.out.println(addBookWithBadISBN());
+        System.out.println(addBookWithBadRating());
+        System.out.println(removeFromEmptyMap());
+        System.out.println(addRemoveAndCheck());
+        System.out.println(changeAndCheck());
     }
 }
