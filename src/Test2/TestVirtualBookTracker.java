@@ -1,39 +1,72 @@
 package Test2;
 
 import Backend2.Book;
+import Backend2.State;
+
+import Data1.DataUtils;
+
 import Common.HashTableMap;
 import Common.MapADT;
 
 /**
- * Key Tests: Successful import of txt data into app (printed list matches
- * expected data) Add lots of books to check performance issues Add/remove books
- * and check if the printed list matches Change details of books and check if
- * the printed list matches those changes
+ * 
  */
 public class TestVirtualBookTracker {
+    // Successful import of txt data into app (printed list matches expected data)
+    public static boolean importSuccessful() {
+        MapADT<Long, Book> actual = DataUtils.loadData();
+        Book book1 = new Book(923_1_23_872890_2L, "Apple Johnson", "Farmerville", 4);
+        Book book2 = new Book(978_3_16_148410_0L, "Paul John", "Thanks and Planes", 3);
+        MapADT<Long, Book> expected = new HashTableMap<>();
+        expected.put(book1.getIsbn(), book1);
+        expected.put(book2.getIsbn(), book2);
+        return actual.equals(expected);
+    }
+
     // Add book with incorrect data (to trigger the front end error messages)
     public static boolean addBookWithBadISBN() {
-        MapADT<Long,Book> map = new HashTableMap<>();
-        long isbn = 123L;
-        boolean hasPut = map.put(isbn, new Book(isbn, "Apple Johnson", "Farmerville", 2));
+        State state = new State();
+        Book book = new Book(123L, "Apple Johnson", "Farmerville", 2);
+        boolean hasPut = state.add(book);
         return !hasPut;
     }
 
     // Add book with incorrect data (to trigger the front end error messages)
     public static boolean addBookWithBadRating() {
-        MapADT<Long,Book> map = new HashTableMap<>();
-        long isbn = 978_3_16_148410_0L;
-        boolean hasPut = map.put(isbn, new Book(isbn, "Paul John", "Thanks and Planes", -1));
+        State state = new State();
+        Book book = new Book(978_3_16_148410_0L, "Paul John", "Thanks and Planes", -1);
+        boolean hasPut = state.add(book);
         return !hasPut;
     }
 
-    // Remove book with empty hash table
+    // Remove book from empty hash table
     public static boolean removeFromEmptyMap() {
-        MapADT<Long,Book> map = new HashTableMap<>();
-        // String prev = getAllBooks(map);
-        Book nothing = map.remove(12345L);
-        // String post = getAllBooks(map);
-        return nothing == null;// && prev.equals(post);
+        State state = new State();
+        String prev = state.toString();
+        Book nothing = state.remove(12345L);
+        String post = state.toString();
+        return nothing == null && prev.equals(post);
+    }
+
+    // Add/remove books and check if the printed list matches
+    public static boolean addRemoveAndCheck() {
+        State state = new State();
+        Book book = new Book(123_4_56_789101_1L, "Rooster", "Lighthouse", 3);
+        state.add(book);
+        //TODO: Replace with actual isbn
+        state.remove(98765L);
+        String expected = "";
+        return state.toString().equals(expected);
+    }
+
+    // Change details of books and check if the printed list matches those changes
+    public static boolean changeAndCheck() {
+        State state = new State();
+        //TODO: Replace with actual isbn
+        Book book = state.remove(98765L);
+        book.setRating(1);
+        state.add(book);
+        String expected = "";
+        return state.toString().equals(expected);
     }
 }
-
