@@ -1,61 +1,99 @@
 package Backend2;
 
-import java.util.ArrayList;
+// --== CS400 File Header Information ==--
+// Name: Margaret Shen
+// Email: mshen42@wisc.edu
+// Team: AA
+// Role: Backend2
+// TA: Sophie Stephenson
+// Lecturer: Gary Dahl
+// Notes to Grader: <optional extra notes>
 
+import java.util.ArrayList;
 import Common.MapADT;
 import DataWrangler2.DataUtils;
 
+/**
+ * This class represents a book object
+ */
 public class State {
-	
-	private MapADT<Long, Book> map = DataUtils.loadData(); 
+
+	private MapADT<Long, Book> map = DataUtils.loadData();
 	private ArrayList<Long> keys = new ArrayList<>();
-	
+
+	/**
+ * @param book book object to be added
+ * @return true if the book object was added, otherwise false
+ */
 	public boolean add(Book book) {
-		boolean isValid = true; 
-		Long isbn = book.getIsbn();
-		
-		// checks if the isbn is correct 
+		boolean isValid = true; // true if the book is valid, otherwise false
+		Long isbn = book.getIsbn(); // ISBN of the book object
+
+		// checks if the isbn is correct number of digits long
 		if (isbn.toString().length() != 10 || isbn.toString().length() != 13) {
-			isValid = false; 
+			isValid = false;
 		}
-		
-		// rating cannot be less than zero 
+
+		// rating cannot be less than zero
 		if (book.getRating() < 0) {
-			isValid = false; 
+			isValid = false;
 		}
-		
-		// checks if author and title are defined 
+
+		// checks if author and title are defined
 		if (book.getAuthor() == null && book.getTitle() == null) {
-			isValid = false; 
+			isValid = false;
 		}
-		
-		// adds book to the map if it is valid 
+
+		// adds book to the map if it is valid
 		if (isValid) {
+			keys.add(isbn);
 			return map.put(book.getIsbn(), book);
 		}
 		return false;
 	}
-	
-	// gets book out of the map 
+
+	/**
+	* given a valid key, gets a book object
+ * @param isbn isbn of the book
+ * @return the book object that has the isbn, otherwise returns null
+ */
 	public Book get(Long isbn) {
 		if (map.containsKey(isbn)) {
 			return map.get(isbn);
 		}
 		return null;
 	}
-	
-	// saves the books in the map into a txt file
+
+	/**
+	 * saves the data stored in the map into a text file
+	 */
 	public void save() {
-		DataUtils.saveData(map, keys); 
+		DataUtils.saveData(map, keys);
 	}
 
-	public Book remove(long l) {
+	/**
+	* removes and returns the book object from the map
+	* @param isbn isbn of the book
+  * @return the book object that is removed, returns null if the book object is not in the map
+  */
+	public Book remove(long isbn) {
+		if (map.containsKey(isbn)){
+			map.remove(isbn);
+			keys.remove(isbn);
+		}
 		return null;
 	}
-	
+
+	/**
+	 * converts all the stored book objects into a printable string
+	 */
 	@Override
 	public String toString(){
-		return null;
+		String allBooks = "";
+		for (int i = 0; i < keys.size(); i++) {
+			allBooks = allBooks + map.get(keys.get(i)).toString();
+		}
+		return allBooks;
 	}
 
 }
