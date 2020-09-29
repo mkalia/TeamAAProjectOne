@@ -1,4 +1,10 @@
-//Grant Parfrey
+// --== CS400 File Header Information ==--
+// Name: Grant Parfrey
+// Email: gparfrey@wisc.edu
+// Team: AA
+// TA: Sophie Stephenson
+// Lecturer: Florian Heimerl
+// Notes to Grader: Some functionality might not be working due to other roles.
 package FrontEnd1;
 import Backend2.*;
 import Common.*;
@@ -17,9 +23,9 @@ public class App {
         System.out.println("This program stores ISBN's, book titles, authors, and ratings.");
         System.out.println("To interact, simply enter the number (integer only) that corresponds to the menu item you want.");
 
-        int i = -999;
+        int i = -998;
         while (i != 6) {
-            if(i==-999){//see if this is the first time that the program is run
+            if(i==-998){//see if this is the first time that the program is run
                 current.writeMenu();
             }else{//if this is not the first time it is run, that means the user just got back to the menu
                 System.out.println("You are now back to the menu. Enter your desired task. Enter 7 to see menu options.");
@@ -102,15 +108,33 @@ public class App {
                         System.out.println("The ISBN you entered: "+lookupISBN);
                         break;
                     }
-                    System.out.println("Here is the book: ");
+                    System.out.println("Here is the book:");
                     System.out.println(lookupBook.toString());
                     break;
                 case 3://remove
                     System.out.println("What is the ISBN of the book to remove?");
-                    //state.remove();
+                    if(!input.hasNextLong()) {
+                        input.nextLine();
+                        System.out.println("A long value type was not found.");
+                        break;
+                    }
+                    Long removeISBN = input.nextLong();
+                    if(removeISBN.toString().length() != 10 && removeISBN.toString().length() != 13){
+                        System.out.println("The length you entered was: "+removeISBN.toString().length());
+                        System.out.println("Please try adding a book again with the correct length of 10 or 13.");
+                        break;
+                    }
+                    Book removedBook = state.remove(removeISBN);
+                    if(removedBook == null){
+                        System.out.println("That book does not exist.");
+                    }else{
+                        System.out.println("Here is the book that you removed:");
+                        System.out.println(removedBook.toString());
+                    }
                     break;
                 case 4://prints all books
-                    //TODO
+                    System.out.println("Printing books now...");
+                    System.out.println(state.toString());
                     break;
                 case 5://save changes
                     System.out.println("Saving now...");
@@ -137,11 +161,4 @@ public class App {
         System.out.println("6: Quit the application WITHOUT saving changes");
         System.out.println("7: List menu again");
     }
-/*
-add:
-state.add(book.isbn,book);
-save:
-state.save();
-
- */
 }
