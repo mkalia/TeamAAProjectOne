@@ -14,19 +14,19 @@ public class State {
 		boolean isValid = true; 
 		Long isbn = book.getIsbn();
 		
-		// checks if the isbn is correct 
-		if (isbn.toString().length() != 10 || isbn.toString().length() != 13) {
-			isValid = false; 
+		// checks if the isbn is correct
+		if (isbn.toString().length() != 10 && isbn.toString().length() != 13) {
+			isValid = false;
 		}
 		
 		// rating cannot be less than zero 
 		if (book.getRating() < 0) {
-			isValid = false; 
+			isValid = false;
 		}
 		
 		// checks if author and title are defined 
 		if (book.getAuthor() == null && book.getTitle() == null) {
-			isValid = false; 
+			isValid = false;
 		}
 		
 		// adds book to the map if it is valid 
