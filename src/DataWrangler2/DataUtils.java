@@ -15,6 +15,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Backend2.Book;
+
+import Common.HashTableMap;
+import Common.MapADT;
+
 public class DataUtils {
   private static File file = new File("library.txt");
   
