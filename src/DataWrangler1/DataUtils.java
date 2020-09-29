@@ -1,6 +1,4 @@
 package DataWrangler1;
-
-
 // --== CS400 File Header Information ==--
 // Name: Owen Krueger
 // Email: odkrueger@wis.edu
@@ -17,6 +15,11 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+
+import Backend2.Book;
+
+import Common.HashTableMap;
+import Common.MapADT;
 
 public class DataUtils {
 
