@@ -7,7 +7,7 @@ import DataWrangler2.DataUtils;
 
 public class State {
 	
-	private MapADT<Long, Book> map = DataUtils.loadData(); 
+	private MapADT<Book> map = DataUtils.loadData(); 
 	private ArrayList<Long> keys = new ArrayList<>();
 	
 	public boolean add(Book book) {
@@ -31,7 +31,7 @@ public class State {
 		
 		// adds book to the map if it is valid 
 		if (isValid) {
-			return map.put(book.getIsbn(), book.getTitle(), book.getAuthor(), book.getRating());
+			return map.put(book.getIsbn(), book);
 		}
 		return false;
 	}
