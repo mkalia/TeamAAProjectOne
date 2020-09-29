@@ -72,7 +72,7 @@ public class App {
                         break;
                     }
                     int tempRating = input.nextInt();
-                    if(tempRating < 0){//data format validation
+                    if(tempRating < 0 || tempRating > 5){//making sure rating is bounded between 0-5
                         System.out.println("This is not a valid rating. Please try adding a book again.");
                         break;
                     }
