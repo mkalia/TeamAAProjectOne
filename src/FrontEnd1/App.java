@@ -1,21 +1,18 @@
 //Grant Parfrey
 package FrontEnd1;
-/*
+import Backend2.*;
+import Common.*;
+import java.util.Scanner;
 import Backend2.Book;
 import Backend2.State;
-import Data1.DataUtils;
-*/
-
 import Common.HashTableMap;
-import Common.MapADT;
-import java.util.Scanner;
 
 public class App {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         App current = new App();
-        //State state  =new State();
+        State state = new State();
         System.out.println("Welcome to the Online Book Catalog!");
         System.out.println("This program stores ISBN's, book titles, authors, and ratings.");
         System.out.println("To interact, simply enter the number (integer only) that corresponds to the menu item you want.");
@@ -30,7 +27,39 @@ public class App {
             }
             switch (i) {
                 case 1: //add a new book
-                    System.out.println("Case 1");
+                    System.out.println("Adding a new book!");
+                    System.out.println("Please enter the ISBN in the form of a long.");
+                    if(!input.hasNextLong()) {
+                        input.nextLine();
+                        System.out.println("A long value type was not found. Please try adding a new book again.");
+                        break;
+                    }
+                    long tempISBN = input.nextLong();
+                    System.out.println("Please enter the title in the form of a string.");
+                    if(!input.hasNextLine()) {
+                        input.nextLine();
+                        System.out.println("A String value type was not found. Please try adding a new book again.");
+                        break;
+                    }
+                    String tempTitle = input.nextLine();
+                    System.out.println("Please enter the Author in the form of a string.");
+                    if(!input.hasNextLine()) {
+                        input.nextLine();
+                        System.out.println("A String value type was not found. Please try adding a new book again.");
+                        break;
+                    }
+                    String tempAuthor = input.nextLine();
+                    System.out.println("Please enter the rating in the form of an integer");
+                    if(!input.hasNextInt()) {
+                        input.nextLine();
+                        System.out.println("A integer value type was not found. Please try adding a new book again.");
+                        break;
+                    }
+                    int tempRating = input.nextInt();
+                    Book tempBook = new Book(tempISBN, tempTitle, tempAuthor, tempRating);
+                    state.add(tempBook);
+                    System.out.println("Congratulations, the book has been added. Returning to the menu now.");
+                    System.out.println("Enter 7 to see the menu items again.");
                     break;
                 case 2://lookup
                     System.out.println("Case 2");
@@ -52,7 +81,7 @@ public class App {
                     current.writeMenu();
                     break;
                 default:
-                    System.out.println("Please enter a integer in the range provided. Enter 6 to list the menu.");
+                    System.out.println("Please enter a integer in the range provided. Enter 7 to list the menu.");
                     break;
             }
         }
@@ -74,4 +103,3 @@ state.save();
 
  */
 }
-
