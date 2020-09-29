@@ -15,10 +15,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import Backend2.Book;
-import Common.HashTableMap;
-import Common.MapADT;
-
 public class DataUtils {
   private static File file = new File("library.txt");
   
@@ -39,10 +35,15 @@ public class DataUtils {
     return book;
   }
   
-  private static void clearFile() throws IOException {
-    PrintWriter print = new PrintWriter(file);
-    print.print("");
-    print.close();
+  private static void clearFile() {
+    try{
+      PrintWriter print = new PrintWriter(file);
+      print.print("");
+      print.close();
+    } catch(IOException e) {
+      e.getMessage();
+    }
+
 }
   
   /**
@@ -50,14 +51,18 @@ public class DataUtils {
    * @return
    * @throws IOException 
    */
-  public static MapADT<Long,Book> loadData() throws IOException {
+  public static MapADT<Long,Book> loadData() {
     MapADT<Long, Book> hashTable = new HashTableMap<>();
+    try {
     Scanner scnr = new Scanner(file);
     while (scnr.hasNext()) {
         Book book = getInfo(scnr);
         hashTable.put(book.getIsbn(), book);
     }
     scnr.close();
+    } catch(IOException e) {
+      e.getMessage();
+    }
     return hashTable;
   }
   
@@ -66,8 +71,9 @@ public class DataUtils {
    * @param map
    * @throws FileNotFoundException 
    */
-  public static void saveData(MapADT<Long,Book> map, ArrayList<Long> keys) throws IOException {
+  public static void saveData(MapADT<Long,Book> map, ArrayList<Long> keys){
     clearFile();
+    try {
     PrintWriter writer = new PrintWriter(file);
     for (int i = 0; i < keys.size(); i++) {
       Book book = map.remove(keys.get(i));
@@ -77,6 +83,9 @@ public class DataUtils {
       writer.println(book.getRating());
     }
     writer.close();
+    } catch(IOException e) {
+      e.getMessage();
+    }
   }
   
 }
