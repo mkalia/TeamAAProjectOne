@@ -25,3 +25,13 @@ hs_err_pid*
 # personal files (add from your own homework implementation into Common folder)
 HashTableMap.java
 KeyAndValue.java
+
+*.xml
+
+out/production/TeamAAProjectOne/Common/README.md
+
+out/production/TeamAAProjectOne/FrontEnd2/empty.txt
+
+out/production/TeamAAProjectOne/Test1/TestHashTableMap
+
+TeamAAProjectOne.iml
