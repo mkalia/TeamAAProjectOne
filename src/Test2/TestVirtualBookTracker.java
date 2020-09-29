@@ -3,37 +3,12 @@ package Test2;
 import java.util.ArrayList;
 
 import Backend2.Book;
-//import Backend2.State;
+import Backend2.State;
 
-//import Data1.DataUtils;
+import DataWrangler2.DataUtils;
 
 import Common.HashTableMap;
 import Common.MapADT;
-
-class State {
-
-    private MapADT<Long, Book> map = DataUtils.loadData();
-    private ArrayList<Long> keys = new ArrayList<>();
-
-    public boolean add(Book book) {
-        return false;
-    }
-
-    public Book remove(long l) {
-        return null;
-    }
-
-}
-
-class DataUtils {
-    public static MapADT<Long, Book> loadData() {
-        MapADT<Long, Book> map = new HashTableMap<>();
-        return map;
-    }
-
-    public static void saveData(MapADT<Long, Book> map, ArrayList<Long> keys) {
-    }
-}
 
 /**
  * All of these tests return true if they are successful

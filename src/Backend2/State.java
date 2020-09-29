@@ -1,7 +1,14 @@
+package Backend2;
+
+import java.util.ArrayList;
+
+import Common.MapADT;
+import DataWrangler2.DataUtils;
 
 public class State {
 	
-	private MapADT<Book> map = DataUtils.loadData(); 
+	private MapADT<Long, Book> map = DataUtils.loadData(); 
+	private ArrayList<Long> keys = new ArrayList<>();
 	
 	public boolean add(Book book) {
 		boolean isValid = true; 
@@ -39,7 +46,11 @@ public class State {
 	
 	// saves the books in the map into a txt file
 	public void save() {
-		DataUtils.saveData(map); 
+		DataUtils.saveData(map, keys); 
+	}
+
+	public Book remove(long l) {
+		return null;
 	}
 	
 
