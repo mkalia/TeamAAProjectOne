@@ -34,7 +34,8 @@ public class DataUtils {
      * This method collects any Books that were saved to the
      * text file to be used in between sessions
      * Then it loads all of those Objects into the hash table
-     * @return map The HashTableMap to be used
+     * @return MapAndKeys an object containing the hash table and
+     * an arraylist of the keys
      */
     public static MapAndKeys loadData() {
         File file = getFile();
