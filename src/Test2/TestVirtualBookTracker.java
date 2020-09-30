@@ -44,24 +44,31 @@ public class TestVirtualBookTracker {
 
     // Add/remove books and check if the printed list matches
     public static boolean addRemoveAndCheck() {
-        State state = new State();
         Book book = new Book(123_4_56_789101_1L, "Rooster", "Lighthouse", 3);
-        state.add(book);
-        // TODO: Replace with actual isbn
-        state.remove(98765L);
-        String expected = "";
-        return state.toString().equals(expected);
+        State actual = new State();
+        actual.remove(previousISBNs[6]); //remove The Catcher in the Rye
+        actual.add(book); // add Rooster
+        State expected = new State();
+        removeAllPreviousBooks(expected);
+        addAllPreviousBooks(expected);
+        expected.remove(previousISBNs[6]); //remove The Catcher in the Rye
+        expected.add(book); // add Rooster
+        return actual.toString().equals(expected.toString());
     }
 
     // Change details of books and check if the printed list matches those changes
     public static boolean changeAndCheck() {
-        State state = new State();
-        // TODO: Replace with actual isbn
-        Book book = state.remove(98765L);
+        State actual = new State();
+        Book book = actual.remove(previousISBNs[6]); //remove The Catcher in the Rye
         book.setRating(1);
-        state.add(book);
-        String expected = "";
-        return state.toString().equals(expected);
+        actual.add(book);
+        State expected = new State();
+        removeAllPreviousBooks(expected);
+        addAllPreviousBooks(expected);
+        Book book2 = expected.remove(previousISBNs[6]); //remove The Catcher in the Rye
+        book2.setRating(1);
+        expected.add(book2);
+        return actual.toString().equals(expected.toString());
     }
 
     public static void main(String[] args) {
