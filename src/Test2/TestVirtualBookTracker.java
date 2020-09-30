@@ -92,12 +92,12 @@ public class TestVirtualBookTracker {
 
     // Utility method to add books that are expected from library.txt
     private static void addAllPreviousBooks(State expected) {
-        expected.add(new Book(9781416936473L, "Hatchet", "Gary Paulsen", 4));
-        expected.add(new Book(9780756948801L, "The Kite Runner", "Khaled Hosseini", 4));
-        expected.add(new Book(9780192827807L, "War and Peace", "Leo Tolstoy", 5));
-        expected.add(new Book(9780060173227L, "To Kill a Mockingbird", "Harper Lee", 4));
-        expected.add(new Book(9780385537858L, "Inferno", "Dante Alighieri", 5));
-        expected.add(new Book(9780007158447L, "Cat in the Hat", "Dr. Suess", 2));
         expected.add(new Book(9780316450867L, "The Catcher in the Rye", "J. D. Salinger", 5));
+        expected.add(new Book(9780007158447L, "Cat in the Hat", "Dr. Suess", 2));
+        expected.add(new Book(9780385537858L, "Inferno", "Dante Alighieri", 5));
+        expected.add(new Book(9780060173227L, "To Kill a Mockingbird", "Harper Lee", 4));
+        expected.add(new Book(9780192827807L, "War and Peace", "Leo Tolstoy", 5));
+        expected.add(new Book(9780756948801L, "The Kite Runner", "Khaled Hosseini", 4));
+        expected.add(new Book(9781416936473L, "Hatchet", "Gary Paulsen", 4));
     }
 }
