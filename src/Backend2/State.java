@@ -30,7 +30,7 @@ public class State {
 		Long isbn = book.getIsbn(); // ISBN of the book object
 
 		// checks if the isbn is correct number of digits long
-		if (isbn.toString().length() != 10 || isbn.toString().length() != 13) {
+		if (isbn.toString().length() != 10 && isbn.toString().length() != 13) {
 			isValid = false;
 		}
 
