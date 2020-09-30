@@ -59,6 +59,8 @@ public class State {
 		return false;
 	}
 
+
+
 	/**
 	* given a valid key, gets a book object
  * @param isbn isbn of the book
@@ -85,8 +87,8 @@ public class State {
   */
 	public Book remove(long isbn) {
 		if (map.containsKey(isbn)){
-			map.remove(isbn);
 			keys.remove(isbn);
+			return map.remove(isbn);
 		}
 		return null;
 	}
