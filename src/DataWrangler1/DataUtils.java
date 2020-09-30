@@ -1,5 +1,6 @@
 package DataWrangler1;
 // --== CS400 File Header Information ==--
+
 // Name: Owen Krueger
 // Email: odkrueger@wis.edu
 // Team: AA
@@ -19,6 +20,7 @@ import Backend2.Book;
 
 import Common.HashTableMap;
 import Common.MapADT;
+import Common.MapAndKeys;
 
 /**
  * Class DataUtils
@@ -34,10 +36,40 @@ public class DataUtils {
      * Then it loads all of those Objects into the hash table
      * @return map The HashTableMap to be used
      */
-    public static MapADT<Long, Book> loadData() {
+    public static MapAndKeys loadData() {
         File file = getFile();
-        MapADT<Long, Book> map = fillTable(file);
-        return map;
+        MapADT<Long, Book> map = new HashTableMap<>(); //create a new hash table to return
+        ArrayList<Long> keys = new ArrayList<>();
+        try {
+            Scanner reader = new Scanner(file);//to read file; This is the only place for an
+            //exception to be thrown in this method
+            boolean done = false;
+            while (!done) {
+                if (!reader.hasNextLine())//if there is no more input
+                    done = true;
+                else {
+                    try {
+                        String title = reader.nextLine().trim();
+                        String author = reader.nextLine().trim();
+                        Long isbn = Long.parseLong(reader.nextLine().trim());
+                        int rating = Integer.parseInt(reader.nextLine().trim());
+
+                        Book book = new Book(isbn, title, author, rating);
+
+                        map.put(book.getIsbn(), book);
+                        keys.add(isbn);
+                    }
+                    catch (Exception e) {
+                        //error in .txt file format
+                    }
+                }
+            }
+            reader.close();
+            return new MapAndKeys(map,keys);
+        } catch (FileNotFoundException e) {
+            return null; //if the file doesn't exist, then a new file was already made for
+            //writing to, and an empty hash table is returned
+        }
     }
 
     /**

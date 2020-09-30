@@ -19,8 +19,11 @@ import Backend2.Book;
 
 import Common.HashTableMap;
 import Common.MapADT;
+import Common.MapAndKeys;
 
 public class DataUtils {
+
+
   private static File file = new File("library.txt");
   
   
@@ -56,19 +59,21 @@ public class DataUtils {
    * @return
    * @throws IOException 
    */
-  public static MapADT<Long,Book> loadData() {
+  public static MapAndKeys loadData() {
     MapADT<Long, Book> hashTable = new HashTableMap<>();
+    ArrayList<Long> keys = new ArrayList<>();
     try {
     Scanner scnr = new Scanner(file);
     while (scnr.hasNext()) {
         Book book = getInfo(scnr);
         hashTable.put(book.getIsbn(), book);
+        keys.add(book.getIsbn());
     }
     scnr.close();
     } catch(IOException e) {
       e.getMessage();
     }
-    return hashTable;
+    return new MapAndKeys(hashTable, keys);
   }
   
   /**

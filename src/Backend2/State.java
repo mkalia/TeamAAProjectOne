@@ -12,14 +12,21 @@ package Backend2;
 import java.util.ArrayList;
 import Common.MapADT;
 import DataWrangler1.DataUtils;
+import DataWrangler1.MapAndKeys;
 
 /**
  * This class represents a book object
  */
 public class State {
 
-	private MapADT<Long, Book> map = DataUtils.loadData();
-	private ArrayList<Long> keys = new ArrayList<>();
+	private MapADT<Long, Book> map;
+	private ArrayList<Long> keys;
+
+	public State(){
+		MapAndKeys mk = DataUtils.loadData();
+		map = mk.getHashTable();
+		keys = mk.getKeys();
+	}
 
 	/**
  * @param book book object to be added
