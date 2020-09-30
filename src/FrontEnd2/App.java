@@ -1,6 +1,3 @@
-
-package FrontEnd2;
-
 // --== CS400 File Header Information ==--
 // Name: Alexander Ulate
 // Email: ulate@wisc.edu
@@ -11,6 +8,8 @@ package FrontEnd2;
 //import Common.HashTableMap; // add the HashTableMap
 // import Common.MapADT; // Add the Map abstract data type
 import java.util.Scanner; // Get the scanner for the interface
+import Backend2.Book;
+import Backend2.State;
 
 /**
  * This class implements the interface for a book tracking app. The user can interact with the app
@@ -20,7 +19,17 @@ import java.util.Scanner; // Get the scanner for the interface
  *
  */
 public class App {
-
+  private static String tempTitle; // A temporary storage for the title
+  private static Long tempIsbn; // Temporary storage for ISBN #
+  private static String tempAuthor; // Temporary storage for Author
+  private static int tempRating; // Temporary storage for rating
+  
+  public App() {
+    tempTitle = null; // A temporary storage for the title
+    tempIsbn = null; // Temporary storage for ISBN #
+    tempAuthor = null; // Temporary storage for Author
+    tempRating = 0; // Temporary storage for rating
+  }
   /**
    * This private method prints out a line of a given character at a given length
    * 
@@ -68,6 +77,10 @@ public class App {
         System.out
           .println("INVALID INPUT. Please insert valid menu select \ncharacter ('m' to see menu again)");
         break;
+      case "title":
+        System.out
+        .println("INVALID INPUT. Please insert valid title.");
+        break;
       default:
         System.out.println("UNKNOWN INPUT ERROR");
     }
@@ -80,19 +93,119 @@ public class App {
    *    ISBN    :   i
    *    Rating  :   r
    *    Author  :   a
-   *    
-   * @param input - The input from the user
+   * 
+   * @param scnr - The scanner to read the input
    * @param check - The type of input you are checking
    * @return Weather it is valid or not
    */
-  private static boolean checkInput(String input, char check) {
-    switch (check) {
-      case 't':
-        break;
-      default:
-        break;
+//  private static boolean checkInput(Scanner input, char check) {
+//    switch (check) {
+//      case 't': // Check the title
+//        if(input.hasNextLine()) { // Check that the title is not empty
+//          tempTitle = input.nextLine();
+//          return true;
+//        }
+//        break;
+//      case 'i': // Check the ISBN number
+//        if(input.hasNextLong()) { // Check the ISBN is a Long
+//          tempIsbn = input.nextLong();
+//          String test = tempIsbn.toString(); // Check that the length is correct
+//          if(test.length()!= 13 && test.length() != 10) {
+//            tempIsbn = null;
+//            error("isbn");
+//            return false;
+//          }
+//          return true;
+//        }
+//        break;
+//      default:
+//        break;
+//    }
+//    return false; // Not valid
+//  }
+  
+  private static String addTitle(Scanner scnr) {
+    boolean next = false; // Checking if if you should move on to next step
+    String title = null;
+    scnr.nextLine(); // accounts for the scanner error
+    while(!next) {
+      System.out.print("Title of book: ");
+      title = scnr.nextLine();
+      if(title == null || title.equals("")) { // Check that the title is not empty
+        error("title");
+        empty();
+      }
+      else {
+        next = true; // Stop the loop, valid title
+      }
     }
-    return false; // Not valid
+    return title;
+  }
+  
+  private static Long addIsbn(Scanner scnr) {
+    boolean next = false; // Checking if if you should move on to next step
+    Long isbn = null;
+    //scnr.nextLine(); // accounts for the scanner error
+    while(!next) {
+      System.out.print("ISBN Number: ");
+      try { // Make sure the value entered is a long
+        isbn = scnr.nextLong();
+        String test = isbn.toString();
+        if(test.length() == 10 || test.length() == 13)
+          next = true;
+        else {
+          System.out.println("INVALID INPUT: Length of ISBN was not 10 nor 13");
+          empty();
+          scnr.nextLine();
+        }
+      } catch (Exception e) {
+        error("isbn");
+        empty();
+        scnr.nextLine();
+      }
+    }
+    return isbn;
+  }
+  
+  private static String addAuthor(Scanner scnr) {
+    boolean next = false; // Checking if if you should move on to next step
+    String title = null;
+    scnr.nextLine(); // accounts for the scanner error from Long
+    while(!next) {
+      System.out.print("Author of book: ");
+      title = scnr.nextLine();
+      if(title == null || title.equals("")) { // Check that the author is not empty
+        error("author");
+        empty();
+      }
+      else {
+        next = true; // Stop the loop, valid author
+      }
+    }
+    return title;
+  }
+  
+  private static int addRating(Scanner scnr) {
+    boolean next = false; // Checking if if you should move on to next step
+    int rate = 0;
+    while(!next) {
+      System.out.print("Add a rating (0 - 5): ");
+      try { // Make sure the value entered is a long
+        rate = scnr.nextInt();
+        if(rate <= 5 && rate >= 0)
+          next = true;
+        else {
+          System.out.println("INVALID INPUT: Rating was not a number between 0 and 5");
+          empty();
+          scnr.nextLine();
+        }
+      } catch (Exception e) {
+        error("rate");
+        empty();
+        scnr.nextLine();
+      }
+    }
+    return rate;
   }
 
   /**
@@ -126,21 +239,125 @@ public class App {
    * 
    * @param scnr - the scanner
    */
-  private static void addBook(Scanner scnr) {
-    String title; // The title
-    String isbn; // the ISBN number
-    int rating; // The book rating
-    
+  private static void addBook(Scanner scnr, State state) { 
     empty();
     printLine('*',22);
     System.out.println("*     ADD A BOOK     *");
     printLine('*',22);
     empty();
     
-    System.out.print("Title of book: ");
+    // Get the title of the book
+    tempTitle = addTitle(scnr);
+    printLine('-',15);
+    tempIsbn = addIsbn(scnr);
+    printLine('-',15);
+    tempAuthor = addAuthor(scnr);
+    printLine('-',15);
+    tempRating = addRating(scnr);
+    printLine('-',15);
     
+    // Create the book
+    Book book = new Book(tempIsbn, tempTitle, tempAuthor, tempRating);
     
+    // Make sure the book is added correctly
+    if(state.add(book)) {
+      System.out.println("Book was successfully added to the tracker! ");
+      System.out.println(book.toString());
+    } else {
+      System.out.println("Book could not be added to tracker.");
+      System.out.println("Book may already be part of tracker.");
+      System.out.println("Check that book parameters were entered correctly.");
+    }
   }
+  
+  private static void findBook(Scanner scnr, State state) {
+    empty();
+    printLine('*',22);
+    System.out.println("*    FIND A BOOK     *");
+    printLine('*',22);
+    empty();
+    
+    System.out.println("Enter the ISBN Number of the book you are looking for: ");
+    printLine('-',15);
+    boolean next = false;
+    Long isbn = null;
+    while(!next) { // Get the ISBN number
+      System.out.print("ISBN Number: ");
+      try { // Make sure the value entered is a long
+        isbn = scnr.nextLong();
+        String test = isbn.toString();
+        if(test.length() == 10 || test.length() == 13)
+          next = true;
+        else {
+          System.out.println("INVALID INPUT: Length of ISBN was not 10 nor 13");
+          empty();
+          scnr.nextLine();
+        }
+      } catch (Exception e) {
+        error("isbn");
+        empty();
+        scnr.nextLine();
+      }
+    }
+    // Get the book with the given ISBN number
+    Book lookUp = state.get(isbn);
+    // Check if the book exists
+    if (lookUp == null) {
+      System.out.println("ISBN:" + isbn + " does not exist in tracker");
+    } else {
+      System.out.println("Book Found: ");
+      System.out.println(lookUp.toString());
+    }
+  }
+  
+  private static void removeBook(Scanner scnr, State state) {
+    empty();
+    printLine('*',22);
+    System.out.println("*   REMOVE A BOOK    *");
+    printLine('*',22);
+    empty();
+    Long isbn = null;
+    boolean next = false;
+    System.out.println("Enter the ISBN Number of the book you want to remove: ");
+    printLine('-',15);
+    while(!next) { // Get the ISBN number
+      System.out.print("ISBN Number: ");
+      try { // Make sure the value entered is a long
+        isbn = scnr.nextLong();
+        String test = isbn.toString();
+        if(test.length() == 10 || test.length() == 13)
+          next = true;
+        else {
+          System.out.println("INVALID INPUT: Length of ISBN was not 10 nor 13");
+          empty();
+          scnr.nextLine();
+        }
+      } catch (Exception e) {
+        error("isbn");
+        empty();
+        scnr.nextLine();
+      }
+    }
+    
+    Book removed = state.remove(isbn);
+    if(removed == null) { // the book does not exist
+      System.out.println("Book does not exist in tracker.");
+    }else{
+      System.out.println("Book removed: ");
+      System.out.println(removed.toString());//prints the book that was removed
+    }
+  }
+  
+  private static void listBooks(State state) {
+    empty();
+    printLine('*',22);
+    System.out.println("*    LIST BOOKS      *");
+    printLine('*',22);
+    empty();
+    
+    System.out.println(state.toString()); // Prints out the books
+  }
+  
 
   /**
    * This is the main code, where the interface is run.
@@ -150,35 +367,49 @@ public class App {
   public static void main(String[] args) {
     printStartUp();
     printMenu();
+    State state = new State();
     
     Scanner scnr = new Scanner(System.in); // create the scanner
     String input = null; // Create the input
     boolean end = false; // Helps keep text printing correctly
     
     printLine('-', 22);
-    System.out.print("Enter function: ");
+    System.out.print("Enter menu function: ");
     
     // begin the app loop, which also contains the main menu loop
     do {
       input = scnr.next();
       
       switch (input) {
-        case "a":
-          addBook(scnr);
+        case "a": // add a book
+          addBook(scnr, state);
           break;
-        case "q":
+        case "q": // quit
           end = true;
           break;
-        case "m":
+        case "m": // print the menu
           printMenu();
           break;
-        default:
+        case "f": // find a book
+          findBook(scnr, state);
+          break;
+        case "r": // remove book
+          removeBook(scnr, state);
+          break;
+        case "l":
+          listBooks(state);
+          break;
+        case "s": // Save the state of the tracker
+          state.save();
+          System.out.println("Save Successful!");
+          break;
+        default: // invalid input
           error("menu");
           break;
       }
       if (!end)
         printLine('-', 22);
-        System.out.print("Enter function: ");
+        System.out.print("Enter menu function (m for menu): ");
     } while (!input.equals("q")); // When q, quit the program
     
     // End the program
