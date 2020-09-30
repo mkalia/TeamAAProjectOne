@@ -2,9 +2,11 @@
 // Name: Alexander Ulate
 // Email: ulate@wisc.edu
 // Team: AA
+// Role: Front End 2
 // TA: Sophie Stephenson
 // Lecturer: Florian Heimerl
-// Notes to Grader:
+// Notes to Grader: I hope all these codes you've been reading are somewhat entertaining :)
+
 package FrontEnd2;
 import Common.HashTableMap; // add the HashTableMap
 import Common.MapADT; // Add the Map abstract data type
@@ -87,7 +89,11 @@ public class App {
     }
   }
   
-  
+  /**
+   * This method adds in the Title to the book
+   * @param scnr - The user input
+   * @return The title of the book
+   */
   private static String addTitle(Scanner scnr) {
     boolean next = false; // Checking if if you should move on to next step
     String title = null;
@@ -106,6 +112,11 @@ public class App {
     return title;
   }
   
+  /**
+   * This method adds in the ISBN number of a book
+   * @param scnr - The user input
+   * @return The ISBN number
+   */
   private static Long addIsbn(Scanner scnr) {
     boolean next = false; // Checking if if you should move on to next step
     Long isbn = null;
