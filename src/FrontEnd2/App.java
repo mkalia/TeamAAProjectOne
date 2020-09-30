@@ -167,14 +167,19 @@ public class App {
     return isbn;
   }
   
+  /**
+   * This method adds an Author to the book
+   * @param scnr
+   * @return author
+   */
   private static String addAuthor(Scanner scnr) {
     boolean next = false; // Checking if if you should move on to next step
-    String title = null;
+    String author = null;
     scnr.nextLine(); // accounts for the scanner error from Long
     while(!next) {
       System.out.print("Author of book: ");
-      title = scnr.nextLine();
-      if(title == null || title.equals("")) { // Check that the author is not empty
+      author = scnr.nextLine();
+      if(author == null || author.equals("")) { // Check that the author is not empty
         error("author");
         empty();
       }
@@ -182,9 +187,14 @@ public class App {
         next = true; // Stop the loop, valid author
       }
     }
-    return title;
+    return author;
   }
   
+  /**
+   * This method adds a rating to a book
+   * @param scnr - The user input
+   * @return The rating
+   */
   private static int addRating(Scanner scnr) {
     boolean next = false; // Checking if if you should move on to next step
     int rate = 0;
@@ -270,6 +280,12 @@ public class App {
     }
   }
   
+  /**
+   * This method finds a book in the tracker from an ISBN number
+   * 
+   * @param scnr - The user input
+   * @param state - The state of the tracker
+   */
   private static void findBook(Scanner scnr, State state) {
     empty();
     printLine('*',22);
@@ -310,6 +326,12 @@ public class App {
     }
   }
   
+  /**
+   * This method removes the book in the tracker 
+   * 
+   * @param scnr - The scanner to read input
+   * @param state - the state of the tracker
+   */
   private static void removeBook(Scanner scnr, State state) {
     empty();
     printLine('*',22);
@@ -348,6 +370,11 @@ public class App {
     }
   }
   
+  /**
+   * This method list out the books in the Tracker
+   * 
+   * @param state - The state of the Tracker
+   */
   private static void listBooks(State state) {
     empty();
     printLine('*',22);
@@ -396,7 +423,7 @@ public class App {
         case "r": // remove book
           removeBook(scnr, state);
           break;
-        case "l":
+        case "l": // List the books
           listBooks(state);
           break;
         case "s": // Save the state of the tracker
