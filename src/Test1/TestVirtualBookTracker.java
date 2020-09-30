@@ -16,6 +16,11 @@ import DataWrangler1.DataUtils;
 import Common.HashTableMap;
 import Common.MapADT;
 
+/**
+ * Tests the virtual book tracker
+ * @author Jack Robey
+ *
+ */
 public class TestVirtualBookTracker {
 
   /**
