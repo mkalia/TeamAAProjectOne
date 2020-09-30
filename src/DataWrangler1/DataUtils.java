@@ -108,46 +108,6 @@ public class DataUtils {
 
     /**
      * Private helper method
-     * Takes input from the text file, and loads the
-     * data into the hash table
-     * @param file The text file to be read
-     * @return map The hash table map
-     */
-    private static MapADT<Long, Book> fillTable(File file) {
-        MapADT<Long, Book> map = new HashTableMap<>(); //create a new hash table to return
-        try {
-            Scanner reader = new Scanner(file);//to read file; This is the only place for an
-            //exception to be thrown in this method
-            boolean done = false;
-            while (!done) {
-                if (!reader.hasNextLine())//if there is no more input
-                    done = true;
-                else {
-                    try {
-                        String title = reader.nextLine().trim();
-                        String author = reader.nextLine().trim();
-                        Long isbn = Long.parseLong(reader.nextLine().trim());
-                        int rating = Integer.parseInt(reader.nextLine().trim());
-
-                        Book book = new Book(isbn, title, author, rating);
-
-                        map.put(book.getIsbn(), book);
-                    }
-                    catch (Exception e) {
-                        //error in .txt file format
-                    }
-                }
-            }
-            reader.close();
-            return map;
-        } catch (FileNotFoundException e) {
-            return map; //if the file doesn't exist, then a new file was already made for
-            //writing to, and an empty hash table is returned
-        }
-    }
-
-    /**
-     * Private helper method
      * Writes the books from the hash table into the text file
      * @param file The text file
      * @param map The hash table map
