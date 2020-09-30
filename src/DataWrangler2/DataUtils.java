@@ -21,9 +21,20 @@ import Common.HashTableMap;
 import Common.MapADT;
 
 public class DataUtils {
-  private static File file = new File("library.txt");
+  private static File file;
   
-  
+  private static void getFile() {
+    String fileName = System.getProperty("user.dir");
+    fileName += "\\src\\library.txt";
+    file = new File (fileName);
+    if (!file.exists()) {
+      try {
+        file.createNewFile();
+      } catch(IOException e) {
+        e.getMessage();
+      }
+    }
+  }
   /**
    * Helper method for scanning through txt file
    * @param scnr
@@ -59,6 +70,7 @@ public class DataUtils {
   public static MapADT<Long,Book> loadData() {
     MapADT<Long, Book> hashTable = new HashTableMap<>();
     try {
+    getFile();
     Scanner scnr = new Scanner(file);
     while (scnr.hasNext()) {
         Book book = getInfo(scnr);
@@ -77,6 +89,7 @@ public class DataUtils {
    * @throws FileNotFoundException 
    */
   public static void saveData(MapADT<Long,Book> map, ArrayList<Long> keys){
+    getFile();
     clearFile();
     try {
     PrintWriter writer = new PrintWriter(file);
