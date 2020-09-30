@@ -5,8 +5,9 @@
 // TA: Sophie Stephenson
 // Lecturer: Florian Heimerl
 // Notes to Grader:
-//import Common.HashTableMap; // add the HashTableMap
-// import Common.MapADT; // Add the Map abstract data type
+package FrontEnd2;
+import Common.HashTableMap; // add the HashTableMap
+import Common.MapADT; // Add the Map abstract data type
 import java.util.Scanner; // Get the scanner for the interface
 import Backend2.Book;
 import Backend2.State;
@@ -86,43 +87,6 @@ public class App {
     }
   }
   
-  /**
-   * This method checks that the input is valid. The check it does depends on
-   * the check passes into it as a character.
-   *    Title   :   t
-   *    ISBN    :   i
-   *    Rating  :   r
-   *    Author  :   a
-   * 
-   * @param scnr - The scanner to read the input
-   * @param check - The type of input you are checking
-   * @return Weather it is valid or not
-   */
-//  private static boolean checkInput(Scanner input, char check) {
-//    switch (check) {
-//      case 't': // Check the title
-//        if(input.hasNextLine()) { // Check that the title is not empty
-//          tempTitle = input.nextLine();
-//          return true;
-//        }
-//        break;
-//      case 'i': // Check the ISBN number
-//        if(input.hasNextLong()) { // Check the ISBN is a Long
-//          tempIsbn = input.nextLong();
-//          String test = tempIsbn.toString(); // Check that the length is correct
-//          if(test.length()!= 13 && test.length() != 10) {
-//            tempIsbn = null;
-//            error("isbn");
-//            return false;
-//          }
-//          return true;
-//        }
-//        break;
-//      default:
-//        break;
-//    }
-//    return false; // Not valid
-//  }
   
   private static String addTitle(Scanner scnr) {
     boolean next = false; // Checking if if you should move on to next step
